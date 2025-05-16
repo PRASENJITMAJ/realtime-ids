@@ -39,4 +39,4 @@ test_df = pd.DataFrame(X_test_scaled)
 test_df["label"] = y_test
 test_df.to_csv(os.path.join(save_dir, "test_processed.csv"), index=False)
 
-print("✅ Saved all .npy and .csv files to:", save_dir)
+print("Saved all .npy and .csv files to:", save_dir)

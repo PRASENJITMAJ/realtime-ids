@@ -14,4 +14,4 @@ scaler.fit(X)
 
 # Save scaler
 joblib.dump(scaler, r"C:/Users/majum/OneDrive/Pictures/Realtime_IDS/trained_models/scaler.pkl")
-print("✅ Scaler saved successfully!")
+print("Scaler saved successfully!")

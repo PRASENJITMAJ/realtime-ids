@@ -90,7 +90,7 @@ def train_and_save_models(base_dir: str, data_path: str) -> pd.DataFrame:
     # Save performance summary
     performance_df = pd.DataFrame(results).T.round(4)
     performance_df.to_csv(os.path.join(model_dir, "model_performance_summary.csv"))
-    print(f"\n✅ All models and outputs saved under: {base_dir}")
+    print(f"\nAll models and outputs saved under: {base_dir}")
     return performance_df
 
 if __name__ == "__main__":
@@ -99,5 +99,5 @@ if __name__ == "__main__":
     processed_csv   = r'C:/Users/majum/OneDrive/Pictures/Realtime_IDS/NSL-KDD/NSL-KDD-phase1-processed.csv'
 
     summary = train_and_save_models(base_directory, processed_csv)
-    print("\n📊 Model Performance Summary:\n")
+    print("\nModel Performance Summary:\n")
     print(summary)

@@ -47,7 +47,7 @@ for txt, arf in [(train_txt, train_arff), (test_txt, test_arff)]:
         raise FileNotFoundError(f"File not found: {txt} or {arf}")
 
 df = pd.concat(dfs, ignore_index=True)
-print(f"✅ Loaded NSL-KDD dataset with shape: {df.shape}")
+print(f"Loaded NSL-KDD dataset with shape: {df.shape}")
 
 
 df["label"] = df["label"].apply(lambda x: 0 if "normal" in x else 1)
@@ -64,11 +64,11 @@ scaler = StandardScaler()
 df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
 
 
-print("🧼 Missing values:", df.isna().sum().sum())
-print("🔁 Duplicate rows:", df.duplicated().sum())
-print("🔎 Label counts:\n", df["label"].value_counts())
+print("Missing values:", df.isna().sum().sum())
+print("Duplicate rows:", df.duplicated().sum())
+print("Label counts:\n", df["label"].value_counts())
 
 
 out_path = os.path.join(base_path, "NSL-KDD-phase1-processed.csv")
 df.to_csv(out_path, index=False)
-print(f"📁 Saved cleaned dataset to: {out_path}")
+print(f"Saved cleaned dataset to: {out_path}")

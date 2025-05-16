@@ -115,7 +115,7 @@ def train_autoencoder_svm(base_dir: str, data_path: str) -> pd.DataFrame:
     plt.savefig(os.path.join(graph_dir, "AE_SVM_roc_curve.png"))
     plt.close()
 
-    print(f"\n✅ AE+SVM model and results saved in: {ae_dir}")
+    print(f"\nAE+SVM model and results saved in: {ae_dir}")
     return metrics_df
 
 
@@ -123,4 +123,4 @@ if __name__ == "__main__":
     base_dir = r'C:\Users\majum\OneDrive\Pictures\Realtime_IDS'
     data_path = r'C:/Users/majum/OneDrive/Pictures/Realtime_IDS/NSL-KDD/NSL-KDD-phase1-processed.csv'
     result = train_autoencoder_svm(base_dir, data_path)
-    print("\n📊 AE+SVM Results:\n", result)
+    print("\nAE+SVM Results:\n", result)
