@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st # type: ignore
 import pandas as pd
 import numpy as np
 import joblib
@@ -6,7 +6,7 @@ import tensorflow as tf
 import time
 from sklearn.preprocessing import StandardScaler
 
-# ── CONFIG ────────────────────────────────────────────────────────────────────
+
 BASE_DIR   = r'C:\Users\majum\OneDrive\Pictures\Realtime_IDS'
 CSV_PATH   = f"{BASE_DIR}/NSL-KDD/NSL-KDD-phase1-processed.csv"
 MODEL_DIR  = f"{BASE_DIR}/trained_models"
@@ -14,7 +14,7 @@ AE_DIR     = f"{BASE_DIR}/AE_SVM/trained_models"
 
 st.set_page_config(page_title="Live IDS | Realtime Packet Monitor", layout="wide")
 
-# ── STYLES ─────────────────────────────────────────────────────────────────────
+
 st.markdown("""
     <style>
         .big-title { font-size:48px; font-weight:700; text-align:center; color:#f0f0f0; }
@@ -55,7 +55,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ── LOAD DATA + MODELS ────────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
     return pd.read_csv(CSV_PATH)
@@ -70,16 +69,16 @@ encoder = tf.keras.models.load_model(f"{AE_DIR}/encoder_model.keras")
 svm     = joblib.load(f"{AE_DIR}/svm_on_encoded.pkl")
 scaler  = joblib.load(f"{MODEL_DIR}/scaler.pkl")
 
-# ── SIDEBAR ────────────────────────────────────────────────────────────────────
+
 st.sidebar.title("⚙️ Settings")
 model_name = st.sidebar.selectbox("Select Detection Model", list(models.keys()) + ["AE+SVM"])
 delay = st.sidebar.slider("Packet Arrival Speed (sec)", 1, 5, 2)
 
-# ── MAIN HEADER ────────────────────────────────────────────────────────────────
+
 st.markdown("<div class='big-title'>🔐 Real-Time Intrusion Detection System</div>", unsafe_allow_html=True)
 st.markdown("---")
 
-# ── SIMULATED PACKET LOOP ──────────────────────────────────────────────────────
+
 placeholder = st.empty()
 for i in range(1000):
     with placeholder.container():

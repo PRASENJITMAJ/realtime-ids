@@ -94,7 +94,7 @@ def train_and_save_models(base_dir: str, data_path: str) -> pd.DataFrame:
     return performance_df
 
 if __name__ == "__main__":
-    # ✏️ Change this before running
+    
     base_directory = r'C:\Users\majum\OneDrive\Pictures\Realtime_IDS'
     processed_csv   = r'C:/Users/majum/OneDrive/Pictures/Realtime_IDS/NSL-KDD/NSL-KDD-phase1-processed.csv'
 

@@ -6,16 +6,12 @@ from tensorflow.keras.models import Model # type: ignore
 from tensorflow.keras.layers import Input, Dense # type: ignore
 from tensorflow.keras.callbacks import EarlyStopping # type: ignore
 
-# ------------------------------------------------------------------ #
-# 0. Paths
-# ------------------------------------------------------------------ #
-DATA_DIR    = os.path.join("data", "processed")          # outputs of Phase 1
-FEAT_DIR    = os.path.join("data", "features")           # new outputs
+
+DATA_DIR    = os.path.join("data", "processed")  
+FEAT_DIR    = os.path.join("data", "features")     
 os.makedirs(FEAT_DIR, exist_ok=True)
 
-# ------------------------------------------------------------------ #
-# 1. Load processed arrays
-# ------------------------------------------------------------------ #
+
 X_train = np.load(os.path.join(DATA_DIR, "X_train.npy"))
 y_train = np.load(os.path.join(DATA_DIR, "y_train.npy"))
 X_test  = np.load(os.path.join(DATA_DIR, "X_test.npy"))
@@ -23,9 +19,7 @@ y_test  = np.load(os.path.join(DATA_DIR, "y_test.npy"))
 
 print(f"Loaded:  X_train {X_train.shape},  X_test {X_test.shape}")
 
-# ------------------------------------------------------------------ #
-# 2. PCA – keep 95 % variance
-# ------------------------------------------------------------------ #
+
 pca = PCA(n_components=0.95, svd_solver="full", random_state=42)
 X_train_pca = pca.fit_transform(X_train)
 X_test_pca  = pca.transform(X_test)
@@ -37,19 +31,17 @@ print(f"PCA: {X_train.shape[1]}  →  {X_train_pca.shape[1]} components "
 np.save(os.path.join(FEAT_DIR, "X_train_pca.npy"), X_train_pca)
 np.save(os.path.join(FEAT_DIR, "X_test_pca.npy"),  X_test_pca)
 
-# ------------------------------------------------------------------ #
-# 3. AutoEncoder – shallow, bottleneck = input_dim // 2
-# ------------------------------------------------------------------ #
+
 input_dim     = X_train.shape[1]
-encoding_dim  = input_dim // 2           # halve the dimension
+encoding_dim  = input_dim // 2           
 
 # AE architecture
 inp = Input(shape=(input_dim,))
 enc = Dense(encoding_dim, activation="relu")(inp)
-dec = Dense(input_dim,    activation="linear")(enc)      # linear → reconstruction
+dec = Dense(input_dim,    activation="linear")(enc)     
 
 autoencoder = Model(inp, dec)
-encoder     = Model(inp, enc)     # for extracting bottleneck features
+encoder     = Model(inp, enc)     
 
 autoencoder.compile(optimizer="adam", loss="mse")
 
@@ -79,9 +71,7 @@ print(f"AE bottleneck dimension: {X_train_ae.shape[1]}")
 np.save(os.path.join(FEAT_DIR, "X_train_ae.npy"), X_train_ae)
 np.save(os.path.join(FEAT_DIR, "X_test_ae.npy"),  X_test_ae)
 
-# ------------------------------------------------------------------ #
-# 4. Save labels alongside (handy in one folder)
-# ------------------------------------------------------------------ #
+
 np.save(os.path.join(FEAT_DIR, "y_train.npy"), y_train)
 np.save(os.path.join(FEAT_DIR, "y_test.npy"),  y_test)
 

@@ -118,7 +118,7 @@ def train_autoencoder_svm(base_dir: str, data_path: str) -> pd.DataFrame:
     print(f"\n✅ AE+SVM model and results saved in: {ae_dir}")
     return metrics_df
 
-# === Example usage ===
+
 if __name__ == "__main__":
     base_dir = r'C:\Users\majum\OneDrive\Pictures\Realtime_IDS'
     data_path = r'C:/Users/majum/OneDrive/Pictures/Realtime_IDS/NSL-KDD/NSL-KDD-phase1-processed.csv'

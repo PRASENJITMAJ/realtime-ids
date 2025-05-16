@@ -1,6 +1,3 @@
-# 📘 1) Install dependencies first (if not already done)
-# Run these in your terminal or VS Code terminal:
-# pip install pandas numpy liac-arff scikit-learn
 
 import os
 import pandas as pd
@@ -34,7 +31,7 @@ def load_arff(path):
         df.rename(columns={"class": "label"}, inplace=True)
     return df[col_names]
 
-# 📘 4) Set your NSL-KDD folder path here (update this accordingly)
+# 📘 4) Set NSL-KDD folder path here (update this accordingly)
 base_path = "C:\Users\majum\OneDrive\Pictures\Realtime_IDS\NSL-KDD"  # update this
 train_txt = os.path.join(base_path, "KDDTrain+.txt")
 train_arff = os.path.join(base_path, "KDDTrain+.arff")
@@ -64,17 +61,16 @@ df.reset_index(drop=True, inplace=True)
 # 📘 8) One-hot encode categorical columns
 df = pd.get_dummies(df, columns=["protocol_type", "service", "flag"], drop_first=True)
 
-# 📘 9) Normalize numeric features
 numeric_cols = [col for col in df.columns if df[col].dtype in [np.float64, np.int64] and col != "label"]
 scaler = StandardScaler()
 df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
 
-# 📘 10) Final checks
+
 print("🧼 Missing values:", df.isna().sum().sum())
 print("🔁 Duplicate rows:", df.duplicated().sum())
 print("🔎 Label counts:\n", df["label"].value_counts())
 
-# 📘 11) Save processed CSV locally
+
 out_path = os.path.join(base_path, "NSL-KDD-phase1-processed.csv")
 df.to_csv(out_path, index=False)
 print(f"📁 Saved cleaned dataset to: {out_path}")
