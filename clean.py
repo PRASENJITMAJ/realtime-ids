@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
-import arff # type: ignore
+import arff 
 from sklearn.preprocessing import StandardScaler
 
 
