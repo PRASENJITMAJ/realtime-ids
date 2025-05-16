@@ -1,11 +1,10 @@
-
 import os
 import pandas as pd
 import numpy as np
 import arff # type: ignore
 from sklearn.preprocessing import StandardScaler
 
-# 📘 2) Define column names
+
 col_names = [
     "duration", "protocol_type", "service", "flag", "src_bytes", "dst_bytes",
     "land", "wrong_fragment", "urgent", "hot", "num_failed_logins", "logged_in",
@@ -20,7 +19,6 @@ col_names = [
     "dst_host_srv_rerror_rate", "label"
 ]
 
-# 📘 3) Define functions to load data
 def load_txt(path):
     return pd.read_csv(path, names=col_names, index_col=False)
 
@@ -31,14 +29,14 @@ def load_arff(path):
         df.rename(columns={"class": "label"}, inplace=True)
     return df[col_names]
 
-# 📘 4) Set NSL-KDD folder path here (update this accordingly)
-base_path = "C:\Users\majum\OneDrive\Pictures\Realtime_IDS\NSL-KDD"  # update this
+
+base_path = "C:\Users\majum\OneDrive\Pictures\Realtime_IDS\NSL-KDD"  
 train_txt = os.path.join(base_path, "KDDTrain+.txt")
 train_arff = os.path.join(base_path, "KDDTrain+.arff")
 test_txt = os.path.join(base_path, "KDDTest+.txt")
 test_arff = os.path.join(base_path, "KDDTest+.arff")
 
-# 📘 5) Load data
+
 dfs = []
 for txt, arf in [(train_txt, train_arff), (test_txt, test_arff)]:
     if os.path.isfile(txt):
@@ -51,14 +49,14 @@ for txt, arf in [(train_txt, train_arff), (test_txt, test_arff)]:
 df = pd.concat(dfs, ignore_index=True)
 print(f"✅ Loaded NSL-KDD dataset with shape: {df.shape}")
 
-# 📘 6) Binary label mapping
+
 df["label"] = df["label"].apply(lambda x: 0 if "normal" in x else 1)
 
-# 📘 7) Drop duplicates
+
 df.drop_duplicates(inplace=True)
 df.reset_index(drop=True, inplace=True)
 
-# 📘 8) One-hot encode categorical columns
+
 df = pd.get_dummies(df, columns=["protocol_type", "service", "flag"], drop_first=True)
 
 numeric_cols = [col for col in df.columns if df[col].dtype in [np.float64, np.int64] and col != "label"]
